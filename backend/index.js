@@ -22,18 +22,27 @@ dotenv.config();
 const app = express();
 const PORT = process.env.PORT || 3000;
 
-// Middleware cấu hình CORS
-const CLIENT_URL = process.env.CLIENT_URL || 'http://localhost:5173'; // URL frontend khi dev
+// ✅ Cấu hình CORS đúng cho cả local và online
+const allowedOrigins = [
+  'https://demo-flower-shop-full.vercel.app', // domain Vercel
+  'http://localhost:5173',                    // local dev
+];
 
 app.use(cors({
-  origin: CLIENT_URL, // chỉ cho phép domain frontend gọi tới
+  origin: function (origin, callback) {
+    // Cho phép nếu không có origin (Postman) hoặc có trong danh sách cho phép
+    if (!origin || allowedOrigins.includes(origin)) {
+      callback(null, true);
+    } else {
+      callback(new Error(`CORS blocked from origin: ${origin}`));
+    }
+  },
   methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'],
-  credentials: true, // nếu frontend dùng cookie/session
+  credentials: true,
 }));
 
 app.use(express.json({ limit: '1mb' }));
 app.use(express.urlencoded({ extended: true }));
-
 
 // Root endpoint
 app.get('/', (req, res) => {
@@ -45,32 +54,25 @@ app.get('/api/health', (req, res) => {
   res.json({ status: 'ok', timestamp: new Date().toISOString() });
 });
 
-// Mount API routes directly
+// Mount API routes
 app.use('/api/users', userRoutes);
 app.use('/api/products', productRoutes);
 app.use('/api/categories', categoryRoutes);
 app.use('/api/wishlist', wishlistRoutes);
 app.use('/api/cart', cartRoutes);
-// Support plural alias for cart endpoints
-app.use('/api/carts', cartRoutes);
+app.use('/api/carts', cartRoutes); // alias
 app.use('/api/orders', orderRoutes);
 app.use('/api/shipping', shippingRoutes);
 app.use('/api/payments', paymentRoutes);
-// Blog and Contacts
 app.use('/api', blogRoutes);
 app.use('/api', contactRoutes);
-// Admin
 app.use('/api/admin', adminRoutes);
-// Public sliders
 app.use('/api', sliderPublicRoutes);
-// Chatbot
 app.use('/api', chatbotRoutes);
-// Recommendations
 app.use('/api/recommendations', recommendationRoutes);
-// Reviews
 app.use('/api', reviewRoutes);
 
-// 404 handler for API (Express 5 compatible)
+// 404 handler
 app.use('/api', (req, res) => {
   res.status(404).json({
     success: false,
@@ -88,5 +90,5 @@ app.use((err, req, res, next) => {
 
 // Start server
 app.listen(PORT, () => {
-  console.log(`Server is running on http://localhost:${PORT}`);
+  console.log(`✅ Server is running on port ${PORT}`);
 });
