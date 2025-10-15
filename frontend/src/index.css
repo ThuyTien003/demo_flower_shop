@@ -1,0 +1,210 @@
+:root {
+  --primary: #d63384;
+  --primary-600: #c22577;
+  --accent: #2f9e44;
+  --bg: #ffffff;
+  --text: #222222;
+  --muted: #6b7280;
+  --border: #e5e7eb;
+  --surface: #ffffff;
+  --surface-2: #fafafa;
+  --radius: 14px;
+  --shadow: 0 6px 20px rgba(16, 24, 40, 0.08);
+  --container: 1200px;
+  font-family: Inter, ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial, "Apple Color Emoji", "Segoe UI Emoji";
+  color: var(--text);
+  background-color: var(--bg);
+  text-rendering: optimizeLegibility;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+a {
+  color: var(--primary);
+  text-decoration: none;
+  transition: color .2s ease;
+}
+
+a:hover {
+  color: var(--primary-600);
+}
+
+body {
+  margin: 0;
+  min-width: 320px;
+  min-height: 100vh;
+  background: var(--bg);
+  color: var(--text);
+}
+
+h1 {
+  font-family: "Playfair Display", Georgia, serif;
+  font-weight: 700;
+  letter-spacing: -0.02em;
+}
+
+h2 {
+  font-family: "Playfair Display", Georgia, serif;
+  font-weight: 700;
+  letter-spacing: -0.01em;
+}
+
+button {
+  border-radius: 10px;
+  border: 1px solid var(--border);
+  padding: 10px 14px;
+  font-size: 14px;
+  font-weight: 600;
+  font-family: inherit;
+  background-color: var(--primary);
+  color: #fff;
+  cursor: pointer;
+  transition: background-color .2s ease, box-shadow .2s ease;
+}
+
+button:hover {
+  background-color: var(--primary-600);
+  box-shadow: var(--shadow);
+}
+
+button:focus,
+button:focus-visible {
+  outline: 3px solid rgba(214, 51, 132, 0.3);
+}
+
+.container {
+  max-width: var(--container);
+  margin: 0 auto;
+  padding: 0 20px;
+}
+
+.section {
+  padding: 40px 0;
+}
+
+.card {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  box-shadow: 0 1px 2px rgba(16, 24, 40, 0.04);
+}
+
+.product-card {
+  transition: transform .2s ease, box-shadow .2s ease;
+}
+
+.product-card:hover {
+  transform: translateY(-2px);
+  box-shadow: var(--shadow);
+}
+
+/* Header menu link hover: red text + underline bar */
+.menu-link {
+  position: relative;
+}
+
+.menu-link:hover {
+  color: #e03131; /* red */
+}
+
+.menu-link:hover::after {
+  content: "";
+  position: absolute;
+  left: 10%;
+  right: 10%;
+  bottom: 0;
+  height: 2px;
+  background: #ffffff;
+  border-radius: 2px;
+}
+
+
+.pill {
+  display: inline-block;
+  background: #fff0f6;
+  color: var(--primary-600);
+  border: 1px solid #ffdeeb;
+  padding: 6px 12px;
+  border-radius: 999px;
+  font-size: 12px;
+  font-weight: 600;
+}
+
+.btn-outline {
+  background: #fff;
+  color: var(--primary-600);
+  border: 1px solid #ffd8e8;
+}
+
+/* Account dropdown items base styles */
+.account-dropdown .account-dropdown-item {
+  display: block;
+  border-radius: 8px;
+  transition: background-color .2s ease, color .2s ease;
+}
+
+/* Account dropdown hover: green background, white text */
+.account-dropdown .account-dropdown-item:hover {
+  background: #0f3524;
+  color: #ffffff !important; /* override inline color for contrast */
+}
+
+/* Also apply on focus for keyboard users */
+.account-dropdown .account-dropdown-item:focus,
+.account-dropdown .account-dropdown-item:focus-visible {
+  outline: none;
+  background: #0f3524;
+  color: #ffffff !important;
+}
+
+/* Home categories responsive grid: 1-2-3-4 columns */
+.home-categories {
+  display: grid;
+  grid-template-columns: repeat(1, 1fr);
+  gap: 16px;
+}
+
+@media (min-width: 640px) { /* sm */
+  .home-categories {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 16px;
+  }
+}
+
+@media (min-width: 768px) { /* md */
+  .home-categories {
+    grid-template-columns: repeat(3, 1fr);
+    gap: 16px;
+  }
+}
+
+@media (min-width: 1024px) { /* lg - desktop */
+  .home-categories {
+    grid-template-columns: repeat(4, 1fr);
+    gap: 18px;
+  }
+}
+
+/* Footer links hover to orange */
+.footer-link {
+  color: #ffffff;
+  transition: color .2s ease;
+}
+
+.footer-link:hover {
+  color: #e85d04 !important; /* orange */
+}
+
+/* When hovering the whole contact line, make the link orange as well */
+.footer-contact li:hover .footer-link {
+  color: #e85d04 !important;
+}
+
+/* Smooth color transition for contact list items */
+.footer-contact li {
+  transition: color .2s ease;
+}
+
+.footer-contact li:hover {
+  color: #e85d04; /* icon and any non-link text */
+}
