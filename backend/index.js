@@ -22,10 +22,18 @@ dotenv.config();
 const app = express();
 const PORT = process.env.PORT || 3000;
 
-// Middleware
-app.use(cors());
+// Middleware cấu hình CORS
+const CLIENT_URL = process.env.CLIENT_URL || 'http://localhost:5173'; // URL frontend khi dev
+
+app.use(cors({
+  origin: CLIENT_URL, // chỉ cho phép domain frontend gọi tới
+  methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'],
+  credentials: true, // nếu frontend dùng cookie/session
+}));
+
 app.use(express.json({ limit: '1mb' }));
 app.use(express.urlencoded({ extended: true }));
+
 
 // Root endpoint
 app.get('/', (req, res) => {
